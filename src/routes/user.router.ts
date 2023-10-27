@@ -48,6 +48,7 @@ userRouter.put('/:id', isAuthenticated, isAdmin, async (req, res) => {
   try {
     const userId = req.params.id;
     const { email, username, password, role } = req.body;
+    userUpdateSchema.parse({ email, username, password, role });
     const updatedUser = await updateUser(
       Number(userId),
       email,
