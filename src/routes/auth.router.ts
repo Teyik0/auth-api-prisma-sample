@@ -38,7 +38,7 @@ authRouter.post('/login', async (req, res) => {
   }
 });
 
-authRouter.get('/logout', isAuthenticated, async (req, res) => {
+authRouter.get('/logout', async (req, res) => {
   try {
     const { authorization } = req.headers;
     if (!authorization) throw new Error('Authorization header is required');

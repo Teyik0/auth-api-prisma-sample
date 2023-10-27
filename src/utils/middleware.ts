@@ -1,6 +1,5 @@
 import { NextFunction } from 'express';
 import { Request, Response } from 'express';
-import { verify } from 'jsonwebtoken';
 import { fetchSession } from '../controllers/auth.controller';
 
 export async function isAuthenticated(
@@ -17,7 +16,8 @@ export async function isAuthenticated(
 
   try {
     const token = authorization.split(' ')[1];
-    await fetchSession(token);
+    const user = await fetchSession(token);
+    req.body.user = user;
   } catch (err: any) {
     res.status(401).json({ error: err.message });
   }
