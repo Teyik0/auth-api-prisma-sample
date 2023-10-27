@@ -1,6 +1,6 @@
 import { User } from '@prisma/client';
 import { prisma } from '../index';
-import { hash } from 'bcrypt-ts';
+import * as bcrypt from 'bcrypt';
 
 export const selfUpdate = async (
   user: User,
@@ -16,7 +16,7 @@ export const selfUpdate = async (
       data: {
         email: newEmail,
         username: newUsername,
-        password: newPassword ? await hash(newPassword, 10) : undefined,
+        password: newPassword ? await bcrypt.hash(newPassword, 10) : undefined,
       },
     });
     return { message: 'user has been updated', user: updatedUser };
@@ -40,7 +40,7 @@ export const updateUser = async (
       data: {
         email: email ? email : undefined,
         username: username ? username : undefined,
-        password: password ? await hash(password, 10) : undefined,
+        password: password ? await bcrypt.hash(password, 10) : undefined,
         role: role ? role : undefined,
       },
     });

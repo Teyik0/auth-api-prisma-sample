@@ -1,6 +1,6 @@
 import { User } from '@prisma/client';
 import { prisma } from '../index';
-import { compare, hash } from 'bcrypt-ts';
+import * as bcrypt from 'bcrypt';
 import { sign, verify } from 'jsonwebtoken';
 
 export const fetchSession = async (authToken: string): Promise<User> => {
@@ -49,7 +49,7 @@ export const login = async (username: string, password: string) => {
       },
     });
     if (!user) throw new Error('User not found');
-    const isPasswordValid = await compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) throw new Error('Invalid password');
 
     const token = sign({ id: user.id }, process.env.JWT_SECRET!, {
@@ -90,7 +90,7 @@ export const register = async (
     if (userExists) throw new Error('Username already exists');
     if (emailExists) throw new Error('Email already used');
 
-    const hashedPassword = hash(password, 10);
+    const hashedPassword = bcrypt.hash(password, 10);
     const user = await prisma.user.create({
       data: {
         username,
