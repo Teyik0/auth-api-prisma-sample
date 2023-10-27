@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { login, register, logout } from '../controllers/auth.controller';
 import { z } from 'zod';
-import { isAuthenticated } from '../utils/middleware';
 
 const authRouter = Router();
 

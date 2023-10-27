@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "prisma generate && bun --hot run ./src/index.ts",
+    "dev": "bunx prisma generate && bun --hot run ./src/index.ts",
     "build-app": "bun build ./src/index.ts --outdir=dist --target=node --sourcemap",
     "start": "bun run dist/index.js"
   },

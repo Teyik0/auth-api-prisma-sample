@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 
 import authRouter from './routes/auth.router';
+import userRouter from './routes/user.router';
 
 export const prisma = new PrismaClient();
 
@@ -11,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
 
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');
