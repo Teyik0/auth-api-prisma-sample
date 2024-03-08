@@ -1,4 +1,4 @@
-# auth-api
+# Sample API-AUTH using Prisma
 
 To install dependencies:
 
