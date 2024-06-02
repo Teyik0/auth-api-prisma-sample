@@ -59,15 +59,23 @@ To run the application using Docker, follow these steps:
      ```
      docker build -t auth-api .
      ```
-   - To run the Docker container with environment variables specified in the `.env.example`, use the following command:
+     Or directly take the [image](https://hub.docker.com/r/teyik0/auth-api-sample) from the docker hub
      ```
-     docker run -e DATABASE_URL=postgres://admin:adminpwd@postgresdb:5432/db -e PORT= -e JWT_SECRET= -p 3001:3001 auth-api
+     docker pull teyik0/auth-api-sample
      ```
    - Ensure that the Docker container for the PostgreSQL database is running. You can run a PostgreSQL container using the following command:
      ```
      docker run --name postgresdb -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=adminpwd -e POSTGRES_DB=db -p 5432:5432 -d postgres
      ```
-   - This command will start a PostgreSQL database container named `postgresdb` with the necessary environment variables set for user, password, and database name. It will also map the port 5432 on your host to the port 5432 on the container, allowing the application to connect to it as specified in the `.env` file.
+     This command will start a PostgreSQL database container named `postgresdb` with the necessary environment variables set for user, password, and database name. It will also map the port 5432 on your host to the port 5432 on the container, allowing the application to connect to it as specified in the `.env` file.
+   - To run the Docker container with environment variables specified in the `.env.example`, use the following command:
+     ```
+     docker run -e DATABASE_URL=postgres://admin:adminpwd@postgresdb:5432/db -e PORT=3001 -e JWT_SECRET= -p 3001:3001 auth-api
+     ```
+     Or use the [image](https://hub.docker.com/r/teyik0/auth-api-sample) from the docker hub
+     ```
+     docker run -e DATABASE_URL=postgres://admin:adminpwd@postgresdb:5432/db -e PORT=3001 -e JWT_SECRET= -p 3001:3001 teyik0/auth-api-sample
+     ```
 
 2. **Set Up and Run with Docker Compose:**
 
