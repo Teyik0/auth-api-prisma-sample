@@ -8,10 +8,7 @@ on:
 jobs:
   call-ci:
     name: Call CI
-    runs-on: ubuntu-latest
-    steps:
-      - name: Call CI
-        uses: Teyik0/auth-api-prisma-sample/.github/workflows/ci.yml@main
+    uses: Teyik0/auth-api-prisma-sample/.github/workflows/ci.yml@main
 
   deploy:
     needs: call-ci
