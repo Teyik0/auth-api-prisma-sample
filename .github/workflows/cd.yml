@@ -10,8 +10,10 @@ jobs:
     name: Call CI
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v4
+      - name: Checkout Repository
+        run: ls -l
       - name: Call CI
         uses: ./.github/workflows/ci.yml
 
