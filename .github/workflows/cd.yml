@@ -10,7 +10,13 @@ jobs:
     name: Call CI
     runs-on: ubuntu-latest
     steps:
-      - name: test
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github/workflows/ci.yml
+          sparse-checkout-cone-mode: false
+      - name: Checkout Repository
         run: ls -l
       - name: Call CI
         uses: ./.github/workflows/ci.yml
