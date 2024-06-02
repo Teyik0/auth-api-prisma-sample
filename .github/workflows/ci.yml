@@ -26,6 +26,8 @@ jobs:
     name: Docker build
     runs-on: ubuntu-latest
     steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
       - name: Build Docker Image
         run: |
           docker build -t teyik0/auth-api-sample:latest .
