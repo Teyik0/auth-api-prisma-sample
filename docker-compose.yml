@@ -11,7 +11,7 @@ services:
       POSTGRES_PASSWORD: adminpwd  # Remplacez par le mot de passe souhaité
       POSTGRES_DB: db   # Remplacez par le nom de la base de données souhaité
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d pgdatabase"]
+      test: ["CMD-SHELL", "pg_isready -U admin -d db"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -22,11 +22,13 @@ services:
     build: 
       context: .
     restart: always
-    env_file:
-      - .env
-    container_name: api-zoo
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - PORT=${PORT}
+      - JWT_SECRET=${JWT_SECRET}
+    container_name: api-auth
     ports:
-      - 3000:3000
+      - ${PORT}:${PORT}
     depends_on:
       postgresdb:
         condition: service_healthy

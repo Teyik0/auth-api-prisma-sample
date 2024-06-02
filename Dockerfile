@@ -1,22 +1,23 @@
-FROM node:18-alpine as ts-build
+FROM oven/bun:latest as builder
+
+ENV PORT=${PORT}
+ENV DATABASE_URL=${DATABASE_URL}
+ENV JWT_SECRET=${JWT_SECRET}
 
 WORKDIR /app
 
-COPY . /app
-RUN yarn install
-RUN yarn build
+COPY . .
+RUN bun install
+RUN bun run build
 
-FROM node:18-alpine as ts-runtime
+FROM oven/bun:latest
 
 WORKDIR /app
 
-COPY package.json /app
-COPY yarn.lock /app
-COPY ./prisma /app
-COPY --from=ts-build /app/dist /app/dist
+COPY --from=builder /app/package.json /app/bun.lockb /app/prisma /app/dist ./
 
-RUN yarn install --production
+RUN bun install --production --frozen-lockfile
 
-EXPOSE 3000
+EXPOSE ${PORT}
 
-CMD yarn start
+ENTRYPOINT bun prisma migrate deploy && bun run index.js

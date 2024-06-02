@@ -14,6 +14,6 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000');
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });
