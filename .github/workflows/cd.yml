@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+  release:
+    types: [published, created, edited]
 
 jobs:
   call-ci:
@@ -24,8 +26,18 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push when release
+        uses: docker/build-push-action@v5
+        if: ${{ github.event_name == 'release' && github.event.release.tag_name }}
+        with:
+          push: true
+          tags: |
+            teyik0/auth-api-sample:${{ github.event.release.tag_name }}
+
+      - name: Build and push to production
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: teyik0/auth-api-sample:latest
+          tags: |
+            teyik0/auth-api-sample:latest
